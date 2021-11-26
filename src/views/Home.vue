@@ -1,7 +1,7 @@
 <template>
   <main>
     <section id="vanguard">
-      <Carousel />
+      <Vanguard v-bind:vanguard="vanguard[0]" />
     </section>
 
     <!-- Categories -->
@@ -12,24 +12,14 @@
         <div class="_title">
           <h2>Trending TV Shows</h2>
         </div>
-        <div class="_content carousel">
-          <!-- Navigation -->
-          <span class="nav-left"></span>
-          <span class="nav-right"></span>
-          <TvShows v-bind:tvShows="tv_shows" />
-        </div>
+        <Category v-bind:items="tv_shows" v-bind:type="`tvshows`" />
       </div>
 
       <div class="_container movies">
         <div class="_title">
           <h2>Trending Movies</h2>
         </div>
-        <div class="_content carousel">
-          <!-- Navigation -->
-          <span class="nav-left"></span>
-          <span class="nav-right"></span>
-          <Movies v-bind:moviez="moviez" />
-        </div>
+        <Category v-bind:items="moviez" v-bind:type="'movies'" />
       </div>
     </section>
   </main>
@@ -39,9 +29,8 @@
 import { mapActions, mapState } from "vuex";
 
 // @ is an alias to /src
-import Carousel from "@/components/Carousel";
-import TvShows from "@/components/TvShows";
-import Movies from "@/components/Movies";
+import Vanguard from "@/components/Vanguard";
+import Category from "@/components/Category";
 
 // dispatch
 import { dataService } from "../services";
@@ -54,16 +43,16 @@ export default {
       loading: false,
       tv_shows: [],
       moviez: [],
+      vanguard: [],
     };
   },
   components: {
-    Carousel,
-    TvShows,
-    Movies,
+    Vanguard,
+    Category,
   },
   async created() {
-    await this.loadTvShows();
-    await this.loadMovies();
+    await this.loadVanguard("tt11198330");
+    [this.loadTvShows(), this.loadMovies()];
   },
   methods: {
     ...mapActions(["getMovies", "getTvShows"]),
@@ -98,6 +87,13 @@ export default {
       this.loading = true;
       this.moviez.push(await dataService.getMovieImages(imdbId));
       this.loading = false;
+    },
+    async loadVanguard(imdbId) {
+      let data = {
+        ...(await dataService.getTvShow(imdbId)),
+        ...(await dataService.getTvShowImages(imdbId)),
+      };
+      this.vanguard.push(data);
     },
   },
   computed: {

@@ -1,35 +1,35 @@
 <template>
   <header id="header">
     <div class="_container">
-      <a class="_logo" href="">
+      <router-link class="_logo" to="/">
         <img src="img/logo.png" />
         <h3 class="hom">box</h3>
-      </a>
+      </router-link>
       <div class="_nav">
         <ul id="navbar">
           <li>
-            <a href=""
-              ><span class="som ion-home"></span
-              ><span class="hom">Home</span></a
-            >
+            <router-link to="/">
+              <span class="som ion-home"></span>
+              <span class="hom">Home</span>
+            </router-link>
           </li>
           <li>
-            <a href=""
-              ><span class="som ion-monitor"></span
-              ><span class="hom">TV Shows</span></a
-            >
+            <router-link to="/tvShows">
+              <span class="som ion-monitor"></span>
+              <span class="hom">TV Shows</span>
+            </router-link>
           </li>
           <li>
-            <a href=""
-              ><span class="som ion-ios-film"></span
-              ><span class="hom">Movies</span></a
-            >
+            <router-link to="/movies">
+              <span class="som ion-ios-film"></span>
+              <span class="hom">Movies</span>
+            </router-link>
           </li>
           <li>
-            <a href=""
-              ><span class="som ion-film-marker"></span
-              ><span class="hom">Series</span></a
-            >
+            <router-link to="/">
+              <span class="som ion-film-marker"></span>
+              <span class="hom">Series</span>
+            </router-link>
           </li>
         </ul>
       </div>
@@ -52,6 +52,13 @@
 export default {
   name: "Header",
   props: {},
+  data() {
+    return {
+      home: "/home",
+      movies: "/movies",
+      tvShows: "/tvshows",
+    };
+  },
 };
 </script>
 

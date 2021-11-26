@@ -3,7 +3,7 @@
     <template v-for="(movie, index) in moviez" :key="index">
       <div class="card" :id="movie.imdbId">
         <div class="card-body">
-          <img :src="movie.poster" :alt="movie.title" srcset="" />
+          <img :src="movie.poster" :alt="movie.title" />
         </div>
       </div>
     </template>

@@ -1,22 +1,47 @@
-import { createRouter, createWebHashHistory } from "vue-router";
-import Home from "../views/Home.vue";
+import { createRouter, createWebHistory } from "vue-router";
+
+// const parseProps = (r) => ({ id: parseInt(r.params.id) });
 
 const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home,
+    component: () =>
+      import(/*webpackChunkName: "bundle.movies" */ "../views/Home.vue"),
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].jloadHeroes
+    path: "/movies",
+    name: "Movies",
+    component: () =>
+      import(/*webpackChunkName: "bundle.movies" */ "../views/MoviesList.vue"),
+  },
+  {
+    path: "/movies/:movieId",
+    name: "Movie-Details",
+    // props: true,
+    component: () =>
+      import(
+        /*webpackChunkName: "bundle.movies" */ "../views/MovieDetails.vue"
+      ),
+  },
+  {
+    path: "/tvshows",
+    name: "TvShows",
+    component: () =>
+      import(/*webpackChunkName: "bundle.movies" */ "../views/TvShowsList.vue"),
+  },
+  {
+    path: "/tvshows/:showId",
+    name: "TvShow-Details",
+    component: () =>
+      import(
+        /*webpackChunkName: "bundle.tvshow" */ "../views/TvShowDetails.vue"
+      ),
   },
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
 });
 

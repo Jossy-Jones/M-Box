@@ -11,9 +11,7 @@ import {
 
 const state = () => ({
   movies: [],
-  movie: [],
   tvShows: [],
-  tvShow: [],
 });
 
 const mutations = {
@@ -51,11 +49,22 @@ const actions = {
   },
 };
 
+const getters = {
+  // parameterized getters are not cached. so this is just a convenience to get the state.
+  getMovieById: (state) => (id) => {
+    state.movies.find((movie) => movie.imdb_id === id);
+  },
+  getTvShowById: (state) => (id) => {
+    state.tvShows.find((tvshow) => tvshow.imdb_id === id);
+  },
+};
+
 const modules = [];
 
 export default createStore({
   state,
   mutations,
   actions,
+  getters,
   modules,
 });
