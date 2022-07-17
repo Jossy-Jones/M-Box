@@ -7,9 +7,9 @@
       <div class="card-container">
         <template v-for="(item, index) in items" :key="index">
           <div class="card" :id="item.IMDB">
-            <router-link :to="`/${this.collect}/${item.IMDB}`">
+            <router-link :to="`/${this.collection}/${item.id}`">
               <div class="card-body">
-                <img :src="item.poster" :alt="item.title" />
+                <img :src="item.image" :alt="item.title" />
               </div>
             </router-link>
           </div>
@@ -27,7 +27,7 @@ export default {
   props: ["items", "type"],
   data() {
     return {
-      collect:
+      collection:
         this.type === "movies"
           ? "movies"
           : this.type === "tvshows"
@@ -36,7 +36,7 @@ export default {
     };
   },
   created() {
-    console.log(this.collect);
+    console.log(this.collection);
   },
   methods: {
     next() {

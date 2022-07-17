@@ -1,16 +1,11 @@
 import axios from "axios";
 require("dotenv").config();
 
-const getMovies = async function (sort) {
+const getMovies = async function () {
   let data;
   let options = {
     method: "GET",
-    url: "https://movies-tvshows-data-imdb.p.rapidapi.com/",
-    params: { type: `get-${sort}-movies`, page: "1" },
-    headers: {
-      "x-rapidapi-host": "movies-tvshows-data-imdb.p.rapidapi.com",
-      "x-rapidapi-key": `${process.env.VUE_APP_API_KEY}`,
-    },
+    url: "https://imdb-api.com/en/API/MostPopularMovies/k_dyrq2qt2",
   };
   await axios
     .request(options)
@@ -78,21 +73,17 @@ const getMovieImages = async function (imdbId) {
   return data;
 };
 
-const getTvShows = async function (sort) {
+const getTvShows = async function () {
   let data;
   let options = {
     method: "GET",
-    url: "https://movies-tvshows-data-imdb.p.rapidapi.com/",
-    params: { type: `get-${sort}-shows`, page: "1" },
-    headers: {
-      "x-rapidapi-host": "movies-tvshows-data-imdb.p.rapidapi.com",
-      "x-rapidapi-key": `${process.env.VUE_APP_API_KEY}`,
-    },
+    url: "https://imdb-api.com/en/API/MostPopularTVs/k_dyrq2qt2",
   };
   await axios
     .request(options)
     .then((response) => {
-      data = Object.freeze(response.data.tv_results);
+      console.log(response)
+      data = Object.freeze(response.data.items);
     })
     .catch((err) => {
       data = err;
@@ -147,6 +138,25 @@ const getTvShowImages = async function (imdbId) {
   return data;
 };
 
+const getPosters = async(imdbId)=>{
+  let data;
+  let options = {
+    method: "GET",
+    url: `https://imdb-api.com/en/API/Posters/k_dyrq2qt2/${imdbId}`,
+  };
+  await axios
+    .request(options)
+    .then((response) => {
+      data = response.data;
+    })
+    .catch((err) => {
+      data = err;
+    });
+
+  return data;
+
+}
+
 export const dataService = {
   getMovie,
   getMovies,
@@ -154,4 +164,5 @@ export const dataService = {
   getTvShow,
   getTvShows,
   getTvShowImages,
+  getPosters,
 };
